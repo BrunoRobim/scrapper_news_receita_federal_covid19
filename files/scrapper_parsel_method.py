@@ -9,5 +9,3 @@ url = 'https://www.gov.br/receitafederal/pt-br/acesso-a-informacao/acoes-e-progr
 
 html_content = requests.get(url, headers=headers).text
 print(html_content)
-
-parsel_selector = Selector(html_content)
