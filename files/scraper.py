@@ -1,6 +1,5 @@
 import requests
 from bs4 import BeautifulSoup
-from parsel import Selector
 import re
 
 
@@ -50,14 +49,13 @@ for i in range(1, num_last_page * number_per_page):
             stred_link = ''.join(listed_link)
             # regex the string to exclude everything after the link itself
             final_link = stred_link[0:stred_link.index('"')]
-
             # gather date request
             date = soup.find('span', {'class': 'summary-view-icon'}).get_text()
             print(date)
 
         # Prepare each line of the CSV file
-        # line = title + ';' + final_link + '\n'
+        line = date + ';' + title + ';' + final_link + '\n'
         # print(line)
-        # file.write(line)
+        file.write(line)
     # print(url_page)
 
