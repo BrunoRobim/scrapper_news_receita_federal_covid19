@@ -9,11 +9,13 @@ headers = {
 # url that will be gathered
 url = 'https://www.gov.br/receitafederal/pt-br/acesso-a-informacao/acoes-e-programas/covid-19/noticias-covid-19'
 
+
 site = requests.get(url, headers=headers)
 soup = BeautifulSoup(site.content, 'html.parser')
 last_page = \
     soup.find('a', {'href':'https://www.gov.br/receitafederal/pt-br/acesso-a-informacao/acoes-e-programas/covid-19/noticias-covid-19?b_start:int=150'})\
         .get_text()
+
 
 # last page of the pagination
 num_last_page = int(last_page)
@@ -31,6 +33,8 @@ for i in range(1, num_last_page * number_per_page):
     url_page = f'https://www.gov.br/receitafederal/pt-br/acesso-a-informacao/acoes-e-programas/covid-19/noticias-covid-19?b_start:int={i}'
 
     site = requests.get(url_page, headers=headers)
+
+    # parsing the page content
     soup = BeautifulSoup(site.content, 'html.parser')
     # List of new that will be gathered
     actions = soup.find_all('div', {'class': 'tileContent'})
@@ -51,11 +55,12 @@ for i in range(1, num_last_page * number_per_page):
             final_link = stred_link[0:stred_link.index('"')]
             # gather date request
             date = soup.find('span', {'class': 'summary-view-icon'}).get_text()
-            print(date)
+            # print(date)
 
         # Prepare each line of the CSV file
         line = date + ';' + title + ';' + final_link + '\n'
         # print(line)
         file.write(line)
     # print(url_page)
+
 
